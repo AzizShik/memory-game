@@ -36,7 +36,7 @@ export function createButton(obj) {
 	const { classArr = [], text } = obj;
 
 	const button = createElement('button', {
-		classArr,
+		classArr: classArr,
 		text,
 		attrs: { type: 'button' },
 	});

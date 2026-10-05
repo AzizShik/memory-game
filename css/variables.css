@@ -1,6 +1,8 @@
 :root {
 	--container-width: 1000px;
 
+	--card-bg: #444;
+
 	--bg-color: #222;
 	--text-color: #ffffff;
 	--border-color: #333;

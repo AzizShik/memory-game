@@ -10,7 +10,7 @@ export class GameView {
 
 		const game = createElement('main', { classArr: ['game'] });
 
-		game.append(this.createStats());
+		game.append(this.createStats(), this.createBoard(), this.createGameHint());
 
 		this.appEl.append(this.createHeader(), game);
 	}
@@ -84,5 +84,50 @@ export class GameView {
 		statsSection.append(statMovesEl, statPairAmountEl);
 
 		return statsSection;
+	}
+
+	createBoard() {
+		const boardEl = createElement('div', { classArr: ['board'] });
+
+		for (let i = 0; i < 16; i++) {
+			boardEl.append(this.createCard());
+		}
+
+		return boardEl;
+	}
+
+	createCard() {
+		const cardEl = createButton({ classArr: ['card'] });
+
+		const cardInner = createElement('div', { classArr: ['card__inner'] });
+
+		const cardSideFront = createElement('div', {
+			classArr: ['card__side', 'card__side--front'],
+		});
+
+		const cardSideFrontCover = createElement('span', {
+			classArr: ['card__side-cover'],
+			parent: cardSideFront,
+		});
+
+		const cardSideBack = createElement('div', {
+			classArr: ['card__side', 'card__side--back'],
+			text: '😀',
+		});
+
+		cardInner.append(cardSideFront, cardSideBack);
+
+		cardEl.append(cardInner);
+
+		return cardEl;
+	}
+
+	createGameHint() {
+		const gameHint = createElement('p', {
+			classArr: ['game__hint'],
+			text: 'Открывайте по две карточки и ищите одинаковые изображения. Несовпавшая пара остаётся открытой около секунды.',
+		});
+
+		return gameHint;
 	}
 }
