@@ -1,7 +1,7 @@
 export function createElement(tag, obj = {}) {
 	const element = document.createElement(tag);
 
-	const { classArr = [], id, text, parent, children, attrs } = obj;
+	const { classArr = [], id, text, parent, children = [], attrs } = obj;
 
 	if (classArr.length) {
 		element.className = classArr.join(' ');
@@ -19,7 +19,7 @@ export function createElement(tag, obj = {}) {
 		parent.append(element);
 	}
 
-	if (children) {
+	if (children.length) {
 		element.append(...children);
 	}
 
@@ -30,4 +30,16 @@ export function createElement(tag, obj = {}) {
 	}
 
 	return element;
+}
+
+export function createButton(obj) {
+	const { classArr = [], text } = obj;
+
+	const button = createElement('button', {
+		classArr,
+		text,
+		attrs: { type: 'button' },
+	});
+
+	return button;
 }
