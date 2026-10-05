@@ -1,3 +1,5 @@
+export const TOTAL_PAIRS = 8;
+
 export const CARD_SET = [
 	{ id: 'grin', icon: '😀' },
 	{ id: 'cool', icon: '😎' },

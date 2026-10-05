@@ -1,8 +1,11 @@
+import { TOTAL_PAIRS } from './data.js';
 import { createElement, createButton } from './utils/DOM.js';
 
 export class GameView {
 	constructor(appEl) {
 		this.appEl = appEl;
+		this.movesEl = null;
+		this.pairsEl = null;
 	}
 
 	renderApp(deck, onCardClick) {
@@ -68,10 +71,11 @@ export class GameView {
 		const statSpanValueEl = createElement('span', {
 			classArr: ['stat__span-value'],
 			text: '0',
-			id: 'total-moves-amount',
 		});
 
 		statMovesEl.append(statSpanLabelEl, statSpanValueEl);
+
+		this.movesEl = statSpanValueEl;
 
 		const statSpanPairEl = createElement('span', {
 			classArr: ['stat__span-label'],
@@ -79,11 +83,12 @@ export class GameView {
 		});
 		const statSpanPairValueEl = createElement('span', {
 			classArr: ['stat__span-value'],
-			text: '0 / 8',
-			id: 'pairs-amount',
+			text: `0 / ${TOTAL_PAIRS}`,
 		});
 
 		statPairAmountEl.append(statSpanPairEl, statSpanPairValueEl);
+
+		this.pairsEl = statSpanPairValueEl;
 
 		statsSection.append(statMovesEl, statPairAmountEl);
 
@@ -100,6 +105,29 @@ export class GameView {
 		boardEl.addEventListener('click', onCardClick);
 
 		return boardEl;
+	}
+
+	updateStats({ moves, pairs }) {
+		this.movesEl.textContent = `${moves}`;
+		this.pairsEl.textContent = `${pairs} / ${TOTAL_PAIRS}`;
+	}
+
+	openCard(cardEl) {
+		cardEl.classList.add('is-open');
+	}
+
+	closeCard(cardEl) {
+		cardEl.classList.remove('is-open');
+	}
+
+	markMatched(cardEl) {
+		cardEl.classList.add('is-matched');
+	}
+
+	closeAllCards() {
+		this.appEl.querySelectorAll('.card').forEach(cardEl => {
+			cardEl.classList.remove('is-open', 'is-matched');
+		});
 	}
 
 	createCard(icon, dataId) {
