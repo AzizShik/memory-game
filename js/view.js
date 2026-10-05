@@ -6,11 +6,13 @@ export class GameView {
 	}
 
 	renderApp() {
-		const gameDiv = createElement('div', { classArr: ['game'] });
-
 		this.appEl.replaceChildren();
 
-		this.appEl.append(this.createHeader(), gameDiv);
+		const game = createElement('main', { classArr: ['game'] });
+
+		game.append(this.createStats());
+
+		this.appEl.append(this.createHeader(), game);
 	}
 
 	createHeader() {
@@ -20,7 +22,7 @@ export class GameView {
 			classArr: ['header__title'],
 			text: 'Memory Game',
 		});
-		const headerSubtitle = createElement('h2', {
+		const headerSubtitle = createElement('p', {
 			classArr: ['header__subtitle'],
 			text: 'Найдите все пары за минимальное число ходов',
 		});
@@ -47,5 +49,40 @@ export class GameView {
 		headerEl.append(headerInfo, headerActions);
 
 		return headerEl;
+	}
+
+	createStats() {
+		const statsSection = createElement('section', { classArr: ['stats'] });
+
+		const statMovesEl = createElement('div', { classArr: ['stat'] });
+		const statPairAmountEl = createElement('div', { classArr: ['stat'] });
+
+		const statSpanLabelEl = createElement('span', {
+			classArr: ['stat__span-label'],
+			text: 'Ходы:',
+		});
+		const statSpanValueEl = createElement('span', {
+			classArr: ['stat__span-value'],
+			text: '0',
+			id: 'total-moves-amount',
+		});
+
+		statMovesEl.append(statSpanLabelEl, statSpanValueEl);
+
+		const statSpanPairEl = createElement('span', {
+			classArr: ['stat__span-label'],
+			text: 'Найдено пар:',
+		});
+		const statSpanPairValueEl = createElement('span', {
+			classArr: ['stat__span-value'],
+			text: '0 / 8',
+			id: 'pairs-amount',
+		});
+
+		statPairAmountEl.append(statSpanPairEl, statSpanPairValueEl);
+
+		statsSection.append(statMovesEl, statPairAmountEl);
+
+		return statsSection;
 	}
 }

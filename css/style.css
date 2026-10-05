@@ -15,7 +15,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	max-width: 1000px;
+	max-width: var(--container-width);
 	width: 100%;
 	margin: 0 auto;
 	margin-top: 20px;
@@ -38,4 +38,26 @@ body {
 .header__actions {
 	display: flex;
 	gap: 20px;
+}
+
+.game {
+	max-width: var(--container-width);
+	width: 100%;
+	margin: 0 auto;
+}
+
+.stats {
+	display: flex;
+	justify-content: space-between;
+	width: 50%;
+	margin: 0 auto;
+	padding: 10px;
+	border: var(--button-border);
+	border-radius: var(--border-radius);
+}
+
+.stat {
+	display: flex;
+	gap: 10px;
+	font-size: 21px;
 }
