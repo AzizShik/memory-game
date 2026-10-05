@@ -5,14 +5,14 @@ export class GameView {
 		this.appEl = appEl;
 	}
 
-	renderApp(deck) {
+	renderApp(deck, onCardClick) {
 		this.appEl.replaceChildren();
 
 		const game = createElement('main', { classArr: ['game'] });
 
 		game.append(
 			this.createStats(),
-			this.createBoard(deck),
+			this.createBoard(deck, onCardClick),
 			this.createGameHint(),
 		);
 
@@ -90,12 +90,14 @@ export class GameView {
 		return statsSection;
 	}
 
-	createBoard(deck) {
+	createBoard(deck, onCardClick) {
 		const boardEl = createElement('div', { classArr: ['board'] });
 
 		deck.forEach(item => {
 			boardEl.append(this.createCard(item.icon, item.id));
 		});
+
+		boardEl.addEventListener('click', onCardClick);
 
 		return boardEl;
 	}

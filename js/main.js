@@ -1,3 +1,4 @@
+import { GameController } from './controller.js';
 import { GameState } from './state.js';
 import { createElement } from './utils/DOM.js';
 import { GameView } from './view.js';
@@ -11,4 +12,9 @@ bodyEl.append(appElement);
 const gameState = new GameState();
 const gameView = new GameView(appElement);
 
-gameView.renderApp(gameState.deck);
+const gameController = new GameController(gameState, gameView);
+
+gameView.renderApp(
+	gameState.deck,
+	gameController.onCardClick.bind(gameController),
+);
