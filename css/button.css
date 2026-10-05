@@ -1,0 +1,27 @@
+.button {
+	padding: 12px 20px;
+	border: var(--button-border);
+	border-radius: var(--button-border-radius);
+	background: var(--button-bg);
+	color: var(--text-color);
+	cursor: pointer;
+	box-shadow: var(--button-box-shadow);
+
+	transition:
+		box-shadow 0.3s ease,
+		transform 0.3s ease;
+}
+
+@media (hover: hover) {
+	.button:hover {
+		box-shadow: var(--button-box-shadow-hover);
+	}
+}
+
+.button:active {
+	transform: scale(0.97);
+}
+
+.button--primary {
+	background: var(--button-bg-primary);
+}
