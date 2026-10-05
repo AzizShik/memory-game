@@ -48,7 +48,13 @@ export class GameController {
 
 		if (this.state.isPairFound()) {
 			this.state.isGameOver = true;
+			this.view.openWinModal({ moves: this.state.moves });
 		}
+	}
+
+	onNewGame() {
+		this.state.reset();
+		this.view.renderApp(this.state.deck, this.onCardClick.bind(this));
 	}
 
 	handleMismatch() {

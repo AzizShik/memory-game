@@ -1,3 +1,5 @@
+import { shuffleArray } from './utils/shuffleArray.js';
+
 export const TOTAL_PAIRS = 8;
 
 export const CARD_SET = [
@@ -15,15 +17,4 @@ export function createDeck() {
 	const deck = [...CARD_SET, ...CARD_SET];
 
 	return shuffleArray(deck);
-}
-
-export function shuffleArray(array) {
-	const arr = [...array];
-
-	for (let i = arr.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[arr[i], arr[j]] = [arr[j], arr[i]];
-	}
-
-	return arr;
 }

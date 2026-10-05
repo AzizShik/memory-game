@@ -14,6 +14,11 @@ const gameView = new GameView(appElement);
 
 const gameController = new GameController(gameState, gameView);
 
+gameView.setHandlers({
+	onNewGame: gameController.onNewGame.bind(gameController),
+	onLeaderboard: () => {},
+});
+
 gameView.renderApp(
 	gameState.deck,
 	gameController.onCardClick.bind(gameController),

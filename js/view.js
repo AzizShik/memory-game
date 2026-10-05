@@ -1,4 +1,5 @@
 import { TOTAL_PAIRS } from './data.js';
+import { Modal } from './modal.js';
 import { createElement, createButton } from './utils/DOM.js';
 
 export class GameView {
@@ -6,6 +7,14 @@ export class GameView {
 		this.appEl = appEl;
 		this.movesEl = null;
 		this.pairsEl = null;
+		this.modal = new Modal();
+		this.onNewGame = null;
+		this.onLeaderboard = null;
+	}
+
+	setHandlers({ onNewGame, onLeaderboard }) {
+		this.onNewGame = onNewGame;
+		this.onLeaderboard = onLeaderboard;
 	}
 
 	renderApp(deck, onCardClick) {
@@ -47,6 +56,11 @@ export class GameView {
 			text: 'Таблица лидеров',
 			classArr: ['header__actions-btn', 'button'],
 		});
+
+		headerNewGameBtn.addEventListener('click', () => this.onNewGame?.());
+		headerLeaderboardBtn.addEventListener('click', () =>
+			this.onLeaderboard?.(),
+		);
 
 		const headerActions = createElement('div', {
 			classArr: ['header__actions'],
@@ -128,6 +142,47 @@ export class GameView {
 		this.appEl.querySelectorAll('.card').forEach(cardEl => {
 			cardEl.classList.remove('is-open', 'is-matched');
 		});
+	}
+
+	openWinModal({ moves }) {
+		const title = createElement('h2', {
+			classArr: ['modal__title'],
+			text: 'Победа!',
+		});
+
+		const text = createElement('p', {
+			classArr: ['modal__text'],
+			text: `Число ходов: ${moves}`,
+		});
+
+		const newGameBtn = createButton({
+			text: 'Новая игра',
+			classArr: ['modal__action', 'button', 'button--primary'],
+		});
+
+		newGameBtn.addEventListener('click', () => {
+			this.modal.close();
+			this.onNewGame?.();
+		});
+
+		const closeBtn = createButton({
+			text: 'Закрыть',
+			classArr: ['modal__action', 'button'],
+		});
+
+		closeBtn.addEventListener('click', () => this.modal.close());
+
+		const actions = createElement('div', {
+			classArr: ['modal__actions'],
+			children: [newGameBtn, closeBtn],
+		});
+
+		this.modal.open(
+			createElement('div', {
+				classArr: ['modal__content'],
+				children: [title, text, actions],
+			}),
+		);
 	}
 
 	createCard(icon, dataId) {
