@@ -1,12 +1,16 @@
+import { createDeck } from './data.js';
 import { createElement, createButton } from './utils/DOM.js';
 
 export class GameView {
 	constructor(appEl) {
 		this.appEl = appEl;
+		this.deck = null;
 	}
 
 	renderApp() {
 		this.appEl.replaceChildren();
+
+		this.deck = createDeck();
 
 		const game = createElement('main', { classArr: ['game'] });
 
@@ -89,15 +93,21 @@ export class GameView {
 	createBoard() {
 		const boardEl = createElement('div', { classArr: ['board'] });
 
-		for (let i = 0; i < 16; i++) {
-			boardEl.append(this.createCard());
-		}
+		console.log(this.deck);
+
+		this.deck.forEach(item => {
+			console.log(item.icon);
+			boardEl.append(this.createCard(item.icon, item.id));
+		});
 
 		return boardEl;
 	}
 
-	createCard() {
-		const cardEl = createButton({ classArr: ['card'] });
+	createCard(icon, dataId) {
+		const cardEl = createButton({
+			classArr: ['card'],
+			attrs: { 'data-id': dataId },
+		});
 
 		const cardInner = createElement('div', { classArr: ['card__inner'] });
 
@@ -112,7 +122,7 @@ export class GameView {
 
 		const cardSideBack = createElement('div', {
 			classArr: ['card__side', 'card__side--back'],
-			text: '😀',
+			text: icon,
 		});
 
 		cardInner.append(cardSideFront, cardSideBack);

@@ -33,12 +33,12 @@ export function createElement(tag, obj = {}) {
 }
 
 export function createButton(obj) {
-	const { classArr = [], text } = obj;
+	const { classArr = [], text, attrs } = obj;
 
 	const button = createElement('button', {
 		classArr: classArr,
 		text,
-		attrs: { type: 'button' },
+		attrs: { type: 'button', ...attrs },
 	});
 
 	return button;
