@@ -1,20 +1,20 @@
-import { createDeck } from './data.js';
 import { createElement, createButton } from './utils/DOM.js';
 
 export class GameView {
 	constructor(appEl) {
 		this.appEl = appEl;
-		this.deck = null;
 	}
 
-	renderApp() {
+	renderApp(deck) {
 		this.appEl.replaceChildren();
-
-		this.deck = createDeck();
 
 		const game = createElement('main', { classArr: ['game'] });
 
-		game.append(this.createStats(), this.createBoard(), this.createGameHint());
+		game.append(
+			this.createStats(),
+			this.createBoard(deck),
+			this.createGameHint(),
+		);
 
 		this.appEl.append(this.createHeader(), game);
 	}
@@ -90,13 +90,10 @@ export class GameView {
 		return statsSection;
 	}
 
-	createBoard() {
+	createBoard(deck) {
 		const boardEl = createElement('div', { classArr: ['board'] });
 
-		console.log(this.deck);
-
-		this.deck.forEach(item => {
-			console.log(item.icon);
+		deck.forEach(item => {
 			boardEl.append(this.createCard(item.icon, item.id));
 		});
 
