@@ -1,6 +1,7 @@
 import { TOTAL_PAIRS } from './data.js';
 import { Modal } from './modal.js';
 import { createElement, createButton } from './utils/DOM.js';
+import { formatDate } from './utils/storage.js';
 
 export class GameView {
 	constructor(appEl) {
@@ -142,6 +143,77 @@ export class GameView {
 		this.appEl.querySelectorAll('.card').forEach(cardEl => {
 			cardEl.classList.remove('is-open', 'is-matched');
 		});
+	}
+
+	openLeaderboardModal(scores) {
+		const title = createElement('h2', {
+			classArr: ['modal__title'],
+			text: 'Таблица лидеров',
+		});
+
+		const body = scores.length
+			? this.createScoresTable(scores)
+			: createElement('p', {
+					classArr: ['modal__text'],
+					text: 'Пока нет результатов',
+				});
+
+		const closeBtn = createButton({
+			text: 'Закрыть',
+			classArr: ['modal__action', 'button'],
+		});
+
+		closeBtn.addEventListener('click', () => this.modal.close());
+
+		const actions = createElement('div', {
+			classArr: ['modal__actions'],
+			children: [closeBtn],
+		});
+
+		this.modal.open(
+			createElement('div', {
+				classArr: ['modal__content'],
+				children: [title, body, actions],
+			}),
+		);
+	}
+
+	createScoresTable(scores) {
+		const table = createElement('table', { classArr: ['scores'] });
+
+		const head = createElement('tr', { classArr: ['scores__row'] });
+
+		['Место', 'Ходы', 'Дата'].forEach(title => {
+			head.append(
+				createElement('th', {
+					classArr: ['scores__cell', 'scores__cell--head'],
+					text: title,
+				}),
+			);
+		});
+
+		table.append(head);
+
+		scores.forEach((score, index) => {
+			const row = createElement('tr', { classArr: ['scores__row'] });
+
+			[
+				`${index + 1}`,
+				`${score.moves}`,
+				formatDate(score.playedAt),
+			].forEach(value => {
+				row.append(
+					createElement('td', {
+						classArr: ['scores__cell'],
+						text: value,
+					}),
+				);
+			});
+
+			table.append(row);
+		});
+
+		return createElement('div', { classArr: ['scores__wrapper'], children: [table] });
 	}
 
 	openWinModal({ moves }) {

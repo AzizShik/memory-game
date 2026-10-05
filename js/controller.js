@@ -1,9 +1,10 @@
 const CARD_TIMEOUT = 1000;
 
 export class GameController {
-	constructor(state, view) {
+	constructor(state, view, storage) {
 		this.state = state;
 		this.view = view;
+		this.storage = storage;
 	}
 
 	onCardClick(event) {
@@ -48,6 +49,7 @@ export class GameController {
 
 		if (this.state.isPairFound()) {
 			this.state.isGameOver = true;
+			this.storage.addScore(this.state.moves);
 			this.view.openWinModal({ moves: this.state.moves });
 		}
 	}
@@ -55,6 +57,10 @@ export class GameController {
 	onNewGame() {
 		this.state.reset();
 		this.view.renderApp(this.state.deck, this.onCardClick.bind(this));
+	}
+
+	onLeaderboard() {
+		this.view.openLeaderboardModal(this.storage.getScores());
 	}
 
 	handleMismatch() {

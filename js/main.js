@@ -1,6 +1,7 @@
 import { GameController } from './controller.js';
 import { GameState } from './state.js';
 import { createElement } from './utils/DOM.js';
+import { ScoreStorage } from './utils/storage.js';
 import { GameView } from './view.js';
 
 const bodyEl = document.body;
@@ -12,11 +13,12 @@ bodyEl.append(appElement);
 const gameState = new GameState();
 const gameView = new GameView(appElement);
 
-const gameController = new GameController(gameState, gameView);
+const gameStorage = new ScoreStorage();
+const gameController = new GameController(gameState, gameView, gameStorage);
 
 gameView.setHandlers({
 	onNewGame: gameController.onNewGame.bind(gameController),
-	onLeaderboard: () => {},
+	onLeaderboard: gameController.onLeaderboard.bind(gameController),
 });
 
 gameView.renderApp(

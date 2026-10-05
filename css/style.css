@@ -125,6 +125,31 @@ body {
 	box-shadow: var(--button-box-shadow);
 }
 
+.scores__wrapper {
+	max-height: 320px;
+	overflow-y: auto;
+	margin-bottom: 25px;
+}
+
+.scores {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+.scores__row {
+	border-bottom: 1px solid var(--border-color);
+}
+
+.scores__cell {
+	padding: 8px 10px;
+}
+
+.scores__cell--head {
+	color: var(--card-cover-bg);
+	font-weight: 700;
+}
+
 .game__hint {
 	max-width: 50%;
 	text-align: center;
